@@ -80,3 +80,22 @@ List products:
 ```http
 GET /api/products
 ```
+
+## Error Response
+
+Invalid requests and business rule failures return a consistent JSON response.
+
+```json
+{
+  "code": "INSUFFICIENT_STOCK",
+  "message": "Insufficient stock quantity."
+}
+```
+
+Main error codes:
+
+- `INVALID_REQUEST`
+- `PRODUCT_NOT_FOUND`
+- `INSUFFICIENT_STOCK`
+- `DUPLICATE_PRODUCT`
+- `INTERNAL_SERVER_ERROR`
