@@ -24,6 +24,15 @@ This project is configured with Gradle.
 
 The PostgreSQL DDL is available at [docs/schema.sql](docs/schema.sql).
 
+## Concurrency Control
+
+Stock changes for existing products use pessimistic row locks through Spring Data JPA.
+
+- `findByIdForUpdate` protects inbound and outbound changes by product id.
+- `findByNameForUpdate` protects inbound changes by product name when the product already exists.
+- New product inbound requests use a bounded in-memory striped lock by product name so one application instance does not race while creating the same product name.
+- The database also enforces `UNIQUE (name)` and `CHECK (quantity >= 0)`.
+
 ## API
 
 Create a product when it does not exist and increase stock:
