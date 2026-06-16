@@ -13,6 +13,7 @@
 - Spring Data JPA
 - PostgreSQL
 - Docker Compose
+- Swagger UI
 - Gradle
 
 ## 실행 방법
@@ -37,6 +38,12 @@ docker compose up -d
 
 기본 서버 포트는 `8080`입니다.
 기본 DB 접속 정보는 `docker-compose.yml`의 PostgreSQL 설정과 동일합니다.
+
+Swagger UI 접속:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
 
 애플리케이션과 DB 종료:
 
@@ -85,6 +92,8 @@ Docker Compose로 PostgreSQL을 처음 실행하면 같은 DDL이 `/docker-entry
 - DB 레벨에서도 `UNIQUE (name)`과 `CHECK (quantity >= 0)` 제약으로 마지막 방어선을 둡니다.
 
 ## API
+
+브라우저에서 `http://localhost:8080/swagger-ui.html`에 접속하면 아래 API를 직접 호출해 볼 수 있습니다.
 
 ### 신규 또는 이름 기준 입고
 
