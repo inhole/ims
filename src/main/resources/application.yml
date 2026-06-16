@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ims
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ims}
+    username: ${SPRING_DATASOURCE_USERNAME:ims}
+    password: ${SPRING_DATASOURCE_PASSWORD:ims}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+
+server:
+  port: ${SERVER_PORT:8080}
