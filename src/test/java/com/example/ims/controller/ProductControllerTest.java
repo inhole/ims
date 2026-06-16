@@ -90,6 +90,61 @@ class ProductControllerTest {
     }
 
     @Test
+    void inboundIncreasesExistingProductStock() throws Exception {
+        Product product = productRepository.saveAndFlush(new Product("Product A", 10));
+
+        mockMvc.perform(post("/api/products/{productId}/inbound", product.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "quantity": 3
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(product.getId()))
+                .andExpect(jsonPath("$.name").value("Product A"))
+                .andExpect(jsonPath("$.quantity").value(13));
+    }
+
+    @Test
+    void outboundDecreasesExistingProductStock() throws Exception {
+        Product product = productRepository.saveAndFlush(new Product("Product A", 10));
+
+        mockMvc.perform(post("/api/products/{productId}/outbound", product.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "quantity": 3
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(product.getId()))
+                .andExpect(jsonPath("$.name").value("Product A"))
+                .andExpect(jsonPath("$.quantity").value(7));
+    }
+
+    @Test
+    void getStockReturnsCurrentStock() throws Exception {
+        Product product = productRepository.saveAndFlush(new Product("Product A", 10));
+
+        mockMvc.perform(get("/api/products/{productId}/stock", product.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.productId").value(product.getId()))
+                .andExpect(jsonPath("$.name").value("Product A"))
+                .andExpect(jsonPath("$.quantity").value(10));
+    }
+
+    @Test
+    void getProductsReturnsProducts() throws Exception {
+        productRepository.saveAndFlush(new Product("Product A", 10));
+        productRepository.saveAndFlush(new Product("Product B", 5));
+
+        mockMvc.perform(get("/api/products"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
     void outboundReturnsNotFoundWhenProductDoesNotExist() throws Exception {
         mockMvc.perform(post("/api/products/{productId}/outbound", 999L)
                         .contentType(MediaType.APPLICATION_JSON)
