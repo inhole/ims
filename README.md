@@ -20,4 +20,6 @@ This project is configured with Gradle.
 .\gradlew.bat bootRun
 ```
 
-The Gradle wrapper still needs to be generated or added before these commands can run in a clean checkout.
+## Database
+
+The PostgreSQL DDL is available at [docs/schema.sql](docs/schema.sql).
