@@ -70,8 +70,9 @@ PostgreSQL 연결 정보는 환경 변수로 변경할 수 있습니다.
 
 ## 데이터베이스
 
-제출용 PostgreSQL DDL은 [docs/schema.sql](docs/schema.sql)에 있습니다.
-Docker Compose로 PostgreSQL을 처음 실행하면 같은 DDL이 `/docker-entrypoint-initdb.d/01-schema.sql`로 마운트되어 자동 실행됩니다.
+제출용 전체 PostgreSQL DDL은 [docs/full-ddl.sql](docs/full-ddl.sql)에 있습니다.
+Docker 초기화용 DDL은 [docs/schema.sql](docs/schema.sql)에 있습니다.
+Docker Compose로 PostgreSQL을 처음 실행하면 `docs/schema.sql`이 `/docker-entrypoint-initdb.d/01-schema.sql`로 마운트되어 자동 실행됩니다.
 
 주의: PostgreSQL Docker 이미지는 데이터 볼륨이 비어 있는 최초 실행 시에만 init SQL을 실행합니다. 스키마를 다시 적용하려면 `docker compose down -v`로 볼륨을 삭제한 뒤 다시 실행해야 합니다.
 
